@@ -52,6 +52,7 @@ def index():
 
             # Kopyalanacak metin
             result = (
+                "SURVEY\n"
                 f"Bit Depth: {bit_depth:.2f} m\n"
                 f"Survey Depth: {survey_depth} m\n"
                 f"Inc: {inc} °\n"
