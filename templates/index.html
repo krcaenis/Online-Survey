@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survey Panel</title>
+</head>
+<body>
+    <h1>Survey Panel</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <form method="post">
+        <label>Survey Depth (m):</label><br>
+        <input type="text" name="survey_depth"><br><br>
+        
+        <label>Inc (°):</label><br>
+        <input type="text" name="inc"><br><br>
+
+        <label>Azm (°):</label><br>
+        <input type="text" name="azm"><br><br>
+        
+        <label>TVD (m):</label><br>
+        <input type="text" name="tvd"><br><br>
+        
+        <label>N/S (m):</label><br>
+        <input type="text" name="ns"><br><br>
+        
+        <label>E/W (m):</label><br>
+        <input type="text" name="ew"><br><br>
+        
+        <label>VS (m):</label><br>
+        <input type="text" name="vs"><br><br>
+        
+        <label>DLS (°/30m):</label><br>
+        <input type="text" name="dls"><br><br>
+        
+        <label>Offset:</label><br>
+        <input type="text" name="offset" value="{{ offset }}"><br><br>
+        
+        <button type="submit">Create Text</button>
+    </form>
+
+    {% if result %}
+    <h3>Result:</h3>
+    <pre>{{ result }}</pre>
+    <form action="{{ url_for('copy_text') }}" method="post">
+        <input type="hidden" name="result" value="{{ result }}">
+        <button type="submit">Copy</button>
+    </form>
+    {% endif %}
+</body>
+</html>
