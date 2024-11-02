@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import configparser
 import pyperclip
+import math  # Matematik fonksiyonları için eklenmiştir.
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -33,14 +34,16 @@ def index():
             inc = request.form["inc"]
             azm = request.form["azm"]
             tvd = request.form["tvd"]
-            ns = request.form["ns"]
-            ew = request.form["ew"]
-            vs = request.form["vs"]
+            ns = float(request.form["ns"])  # N/S değeri float olarak alındı
+            ew = float(request.form["ew"])    # E/W değeri float olarak alındı
             dls = request.form["dls"]
             offset = float(request.form["offset"])
             
             # Bit Depth hesaplama
             bit_depth = survey_depth + offset
+
+            # VS değerini hesaplama
+            vs = math.sqrt(ns**2 + ew**2)
 
             # Kopyalanacak metin
             result = (
@@ -52,7 +55,7 @@ def index():
                 f"TVD: {tvd} m\n"
                 f"N/S: {ns} m\n"
                 f"E/W: {ew} m\n"
-                f"VS: {vs} m\n"
+                f"VS: {vs:.2f} m\n"  # Hesaplanan VS değeri burada gösterildi
                 f"DLS: {dls} °/30m"
             )
             
