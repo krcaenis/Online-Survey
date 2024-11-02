@@ -49,11 +49,21 @@
 
     {% if result %}
     <h3>Result:</h3>
-    <pre>{{ result }}</pre>
-    <form action="{{ url_for('copy_text') }}" method="post">
-        <input type="hidden" name="result" value="{{ result }}">
-        <button type="submit">Copy</button>
-    </form>
+    <pre id="result">{{ result }}</pre>
+    <button onclick="copyToClipboard()">Copy</button>
     {% endif %}
+
+    <script>
+        function copyToClipboard() {
+            const resultText = document.getElementById("result").innerText;
+            navigator.clipboard.writeText(resultText)
+                .then(() => {
+                    alert("Metin panoya kopyalandı!");
+                })
+                .catch((error) => {
+                    alert("Kopyalama başarısız: " + error);
+                });
+        }
+    </script>
 </body>
 </html>
