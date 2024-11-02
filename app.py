@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, flash
 import configparser
-import tkinter as tk
+import pyperclip
 
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
@@ -20,14 +20,6 @@ def load_config():
 def save_config():
     with open(config_file, "w") as file:
         config.write(file)
-
-def copy_to_clipboard(text):
-    root = tk.Tk()
-    root.withdraw()  # Ana pencereyi gizle
-    root.clipboard_clear()  # Panoyu temizle
-    root.clipboard_append(text)  # Metni panoya ekle
-    root.update()  # Panoyu güncelle
-    root.destroy()  # Tkinter'ı kapat
 
 @app.route("/", methods=["GET", "POST"])
 def index():
@@ -77,7 +69,7 @@ def index():
 def copy_text():
     result = request.form.get("result")
     if result:
-        copy_to_clipboard(result)  # pyperclip yerine tkinter kullanılıyor
+        pyperclip.copy(result)  # pyperclip yerine tkinter kullanılıyor
         flash("Metin panoya kopyalandı!", "success")
     else:
         flash("Kopyalanacak metin yok.", "danger")
